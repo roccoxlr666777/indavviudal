@@ -2,137 +2,160 @@ import streamlit as st
 import pandas as pd
 import os
 
-# Configuración de la página para que se vea bien en celulares
-st.set_page_config(page_title="Simulador de Inglés para Comunicación", layout="wide", initial_sidebar_state="collapsed")
+# 1. CONFIGURACIÓN
+st.set_page_config(page_title="Advanced English Simulator", page_icon="🌐", layout="wide")
 
-# ==========================================
-# FUNCIÓN PARA CARGAR EL VOCABULARIO (Nuevo método)
-# ==========================================
-@st.cache_data # Cacheamos la carga para que sea rápida
-def cargar_vocabulario_csv():
-    """Carga la base de datos de vocabulario desde el archivo CSV."""
-    archivo_csv = 'vocabulario_comunicacion.csv'
-    
-    # Verificamos si el archivo existe en el servidor
-    if not os.path.exists(archivo_csv):
-        st.error(f"⚠️ Error Crítico: No se encontró el archivo '{archivo_csv}'. Asegúrate de haberlo subido a GitHub junto con este código.")
-        return pd.DataFrame(columns=["Palabra en Inglés", "Categoría Gramatical"]) # Retornamos tabla vacía para no romper la app
+# Diseño limpio sin imágenes complejas
+st.markdown("""
+    <style>
+    .stApp { background-color: #f8f9fa; }
+    h1, h2, h3 { color: #2c3e50; font-family: 'Georgia', serif; }
+    .grammar-box { background-color: #ffffff; padding: 20px; border-left: 5px solid #3498db; border-radius: 5px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    </style>
+""", unsafe_allow_html=True)
 
-    try:
-        df = pd.read_csv(archivo_csv, encoding='utf-8') # Leemos el CSV
-        return df
-    except Exception as e:
-        st.error(f"⚠️ Error al leer el archivo CSV: {e}")
-        return pd.DataFrame(columns=["Palabra en Inglés", "Categoría Gramatical"])
+# 2. SEGURIDAD (Opcional, misma mecánica)
+if 'acceso_avanzado' not in st.session_state:
+    st.session_state.acceso_avanzado = False
 
-# Intentamos cargar los datos
-df_vocabulario_completo = cargar_vocabulario_csv()
+if not st.session_state.acceso_avanzado:
+    st.title("🔒 Advanced English Portal")
+    pwd = st.text_input("Ingresa la clave de acceso (Pista: Avanzado2026):", type="password")
+    if st.button("Entrar"):
+        if pwd == "Avanzado2026":
+            st.session_state.acceso_avanzado = True
+            st.rerun()
+        else:
+            st.error("Contraseña incorrecta.")
+    st.stop()
 
-# ==========================================
-# BASE DE DATOS DE GRAMÁTICA (Se mantiene igual)
-# ==========================================
-gramatica = {
-    "Present Simple": {
-        "Uso": "Hábitos, verdades generales, rutinas y hechos en Comunicación.",
-        "Fórmula (+)": "Sujeto + Verbo (s/es para he/she/it) + Complemento",
-        "Fórmula (-)": "Sujeto + do/does + not + Verbo base + Complemento",
-        "Ejemplo": "The journalist interviews the source.",
-        "Traducción": "El periodista entrevista a la fuente."
+# 3. CARGA DE VOCABULARIO
+@st.cache_data
+def cargar_vocabulario():
+    archivo_csv = 'vocabulario_avanzado.csv'
+    if os.path.exists(archivo_csv):
+        return pd.read_csv(archivo_csv, encoding='utf-8')
+    return pd.DataFrame()
+
+df_vocab = cargar_vocabulario()
+
+# 4. BASE DE DATOS DE EJERCICIOS (Se pueden agregar cientos aquí)
+ejercicios = [
+    {
+        "pregunta": "Choose the correct inversion: ___ had I arrived when the phone rang.",
+        "opciones": ["Hardly", "No sooner", "As soon as", "Barely"],
+        "respuesta_correcta": "Hardly",
+        "explicacion": "'Hardly' va seguido de 'had + sujeto + participio pasado' y se complementa con 'when'."
     },
-    "Present Continuous": {
-        "Uso": "Acciones que ocurren en este momento o planes futuros cercanos (campañas).",
-        "Fórmula (+)": "Sujeto + am/is/are + Verbo(-ing) + Complemento",
-        "Fórmula (-)": "Sujeto + am/is/are + not + Verbo(-ing) + Complemento",
-        "Ejemplo": "They are analyzing the engagement data right now.",
-        "Traducción": "Ellos están analizando los datos de participación en este momento."
+    {
+        "pregunta": "Mixed Conditional: If I had studied medicine, I ___ a doctor right now.",
+        "opciones": ["would have been", "will be", "would be", "had been"],
+        "respuesta_correcta": "would be",
+        "explicacion": "Condición irreal en el pasado (had studied) + Resultado irreal en el presente (would be)."
     },
-    "Past Simple": {
-        "Uso": "Acciones completadas en un momento específico del pasado (eventos de prensa).",
-        "Fórmula (+)": "Sujeto + Verbo en pasado + Complemento",
-        "Fórmula (-)": "Sujeto + did + not + Verbo base + Complemento",
-        "Ejemplo": "The PR agency launched the viral campaign yesterday.",
-        "Traducción": "La agencia de RP lanzó la campaña viral ayer."
+    {
+        "pregunta": "Passive Voice: It ___ that the economy will recover soon.",
+        "opciones": ["is believing", "believes", "is believed", "has believed"],
+        "respuesta_correcta": "is believed",
+        "explicacion": "Estructura de voz pasiva impersonal para opiniones generales: It + to be + past participle + that."
     },
-    "Future (Will)": {
-        "Uso": "Predicciones de mercado, promesas o decisiones espontáneas.",
-        "Fórmula (+)": "Sujeto + will + Verbo base + Complemento",
-        "Fórmula (-)": "Sujeto + will + not (won't) + Verbo base + Complemento",
-        "Ejemplo": "Consumers will trust a credible brand.",
-        "Traducción": "Los consumidores confiarán en una marca creíble."
-    },
-    "Present Perfect": {
-        "Uso": "Acciones que iniciaron en el pasado y continúan en el presente, o experiencias relevantes.",
-        "Fórmula (+)": "Sujeto + have/has + Verbo en participio + Complemento",
-        "Fórmula (-)": "Sujeto + have/has + not + Verbo en participio + Complemento",
-        "Ejemplo": "We have developed a new social media strategy.",
-        "Traducción": "Hemos desarrollado una nueva estrategia de redes sociales."
+    {
+        "pregunta": "Vocabulary: The new policy will ___ the negative effects of the crisis.",
+        "opciones": ["exacerbate", "mitigate", "delineate", "foster"],
+        "respuesta_correcta": "mitigate",
+        "explicacion": "'Mitigate' significa hacer algo menos severo o doloroso (Atenuar)."
     }
-}
+]
 
-# ==========================================
-# INTERFAZ DE USUARIO (UI)
-# ==========================================
-# Diseño simplificado para pantallas táctiles
-st.title("📚 Inglés para Comunicólogos")
-st.markdown("Domina el vocabulario clave y las fórmulas gramaticales de tu profesión.")
+# 5. ESTRUCTURA DE LA APP
+st.title("🌐 Advanced English Training C1/C2")
+st.markdown("Dominio estructural, vocabulario académico y precisión gramatical.")
 
-# Pestañas táctiles en lugar de menú lateral para mejor UX en celular
-tab_vocab, tab_gram = st.tabs(["📖 Vocabulario de Comunicación", "⚙️ Fórmulas y Tiempos"])
+tab_vocab, tab_gramatica, tab_ejercicios = st.tabs(["📖 C1/C2 Vocabulary", "⚙️ Advanced Structures", "📝 Interactive Quiz"])
 
-# --- Pestaña de Vocabulario ---
+# --- PESTAÑA 1: VOCABULARIO ---
 with tab_vocab:
-    st.header("Base de Datos Estructural")
-    
-    # Verificamos que haya datos
-    if not df_vocabulario_completo.empty:
-        # Obtener categorías únicas dinámicamente desde el CSV
-        categorias_disponibles = df_vocabulario_completo["Categoría Gramatical"].unique()
-        
-        # Filtro interactivo (selectbox grande para dedo)
-        categoria_seleccionada = st.selectbox("Categoría Gramatical:", categorias_disponibles)
-        
-        # Filtrar el DataFrame
-        df_filtrado = df_vocabulario_completo[df_vocabulario_completo["Categoría Gramatical"] == categoria_seleccionada]
-        
-        # Mostrar datos en una tabla limpia, ordenada alfabéticamente
-        df_mostrar = df_filtrado[["Palabra en Inglés"]].sort_values(by="Palabra en Inglés").reset_index(drop=True)
-        st.dataframe(df_mostrar, use_container_width=True, height=450)
-        
-        # Contador profesional
-        num_palabras = len(df_mostrar)
-        st.info(f"Mostrando **{num_palabras}** términos de la categoría: {categoria_seleccionada}.")
-        
-        st.markdown("---")
-        st.caption("Tip: Para agregar más palabras, edita el archivo 'vocabulario_comunicacion.csv' en GitHub.")
+    st.markdown("### Base de Datos de Vocabulario Avanzado")
+    if not df_vocab.empty:
+        categorias = df_vocab["Categoría Gramatical"].unique()
+        cat_sel = st.selectbox("Filtrar por tipo:", categorias)
+        df_mostrar = df_vocab[df_vocab["Categoría Gramatical"] == cat_sel][["Palabra en Inglés", "Traducción"]].sort_values(by="Palabra en Inglés").reset_index(drop=True)
+        st.dataframe(df_mostrar, use_container_width=True, height=400)
     else:
-        st.warning("No hay vocabulario cargado. Verifica tu archivo CSV.")
+        st.error("No se encontró el archivo CSV.")
 
-# --- Pestaña de Gramática ---
-with tab_gram:
-    st.header("Estructuras Clave con Ejemplos del Área")
+# --- PESTAÑA 2: GRAMÁTICA AVANZADA ---
+with tab_gramatica:
+    st.markdown("### Estructuras de Nivel C1/C2")
     
-    # Botones grandes para seleccionar el tiempo
-    tiempo_seleccionado = st.radio("Tiempo/Modo Gramatical:", list(gramatica.keys()))
+    st.markdown("""
+    <div class='grammar-box'>
+        <h4>1. Inversion (Inversión Estilística)</h4>
+        <p><b>Uso:</b> Para dar énfasis literario o formal. Se altera el orden de Sujeto y Verbo Auxiliar tras ciertas expresiones negativas.</p>
+        <p><b>Fórmula:</b> Expresión Negativa + Auxiliar + Sujeto + Verbo</p>
+        <p><b>Ejemplos:</b></p>
+        <ul>
+            <li><i>Normal:</i> I have never seen such a beautiful painting.</li>
+            <li><i>Inversion:</i> <b>Never have I seen</b> such a beautiful painting.</li>
+            <li><i>Inversion:</i> <b>Seldom does he visit</b> his hometown.</li>
+        </ul>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("""
+    <div class='grammar-box'>
+        <h4>2. Mixed Conditionals (Condicionales Mixtos)</h4>
+        <p><b>Uso:</b> Para mezclar tiempos. Usualmente, una condición irreal en el pasado que tiene un resultado en el presente.</p>
+        <p><b>Fórmula:</b> If + Past Perfect (Pasado) , Sujeto + Would + Verbo base (Presente)</p>
+        <p><b>Ejemplos:</b></p>
+        <ul>
+            <li><i>Contexto:</i> No gané la lotería ayer, así que no soy rico hoy.</li>
+            <li><i>Mixto:</i> <b>If I had won</b> the lottery, <b>I would be</b> rich now.</li>
+        </ul>
+    </div>
+    """, unsafe_allow_html=True)
     
-    # Obtener los datos del tiempo seleccionado
-    datos_tiempo = gramatica[tiempo_seleccionado]
+    st.markdown("""
+    <div class='grammar-box'>
+        <h4>3. Impersonal Passive (Voz Pasiva Impersonal)</h4>
+        <p><b>Uso:</b> Común en periodismo y academia para expresar suposiciones, creencias o reportes sin especificar quién lo dice.</p>
+        <p><b>Fórmula 1:</b> It is + Participio (said/believed/thought) + that...</p>
+        <p><b>Fórmula 2:</b> Sujeto + is + Participio + to + verbo...</p>
+        <p><b>Ejemplos:</b></p>
+        <ul>
+            <li><b>It is widely believed that</b> the climate is changing.</li>
+            <li>The CEO <b>is expected to resign</b> tomorrow.</li>
+        </ul>
+    </div>
+    """, unsafe_allow_html=True)
+
+# --- PESTAÑA 3: EJERCICIOS INTERACTIVOS ---
+with tab_ejercicios:
+    st.markdown("### Test Your Knowledge")
+    st.write("Selecciona la respuesta correcta y presiona 'Check Answers' al final.")
     
-    # Diseño en tarjetas limpias
-    with st.container():
-        st.subheader(f"📌 {tiempo_seleccionado}")
-        st.write(f"**Uso:** {datos_tiempo['Uso']}")
+    # Usamos session_state para guardar las respuestas del usuario
+    respuestas_usuario = {}
+    
+    for i, ej in enumerate(ejercicios):
+        st.markdown(f"**Q{i+1}: {ej['pregunta']}**")
+        respuestas_usuario[i] = st.radio("Selecciona una opción:", ej['opciones'], key=f"q_{i}", index=None)
+        st.write("---")
         
-        st.markdown("#### 🧮 Fórmulas")
-        
-        # Fórmulas separadas en contenedores de color
-        with st.container():
-            st.success(f"➕ Afirmativa: {datos_tiempo['Fórmula (+)']}")
-        with st.container():
-            st.error(f"➖ Negativa: {datos_tiempo['Fórmula (-)']}")
+    if st.button("Verificar Resultados", type="primary"):
+        puntaje = 0
+        for i, ej in enumerate(ejercicios):
+            st.markdown(f"**Q{i+1}: {ej['pregunta']}**")
+            if respuestas_usuario[i] == ej['respuesta_correcta']:
+                st.success(f"✅ ¡Correcto! Tu respuesta: {respuestas_usuario[i]}")
+                puntaje += 1
+            else:
+                st.error(f"❌ Incorrecto. Tu respuesta: {respuestas_usuario[i]} | Respuesta correcta: {ej['respuesta_correcta']}")
             
-        st.markdown("#### 💡 Ejemplo Práctico de Comunicación")
-        st.info(f"🇬🇧 **Inglés:** {datos_tiempo['Ejemplo']}\n\n🇪🇸 **Español:** {datos_tiempo['Traducción']}")
-
-# Pie de página ligero
-st.markdown("---")
-st.caption("Desarrollado para el análisis estructural del idioma inglés en el sector Comunicación.")
+            # Muestra la explicación técnica siempre al calificar
+            st.info(f"💡 Explicación: {ej['explicacion']}")
+            st.write("---")
+            
+        st.metric(label="Puntaje Final", value=f"{puntaje} / {len(ejercicios)}")
+        if puntaje == len(ejercicios):
+            st.balloons()
