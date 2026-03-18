@@ -13,7 +13,6 @@ st.markdown("""
     .grammar-box { background-color: #ffffff; padding: 20px; border-left: 5px solid #3498db; border-radius: 5px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
     </style>
 """, unsafe_allow_html=True)
-
 # 2. SEGURIDAD (Opcional, misma mecánica)
 if 'acceso_avanzado' not in st.session_state:
     st.session_state.acceso_avanzado = False
