@@ -43,7 +43,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ==========================================
-# 2. BASE DE DATOS GRAMATICAL (15 Temas)
+# 2. BASE DE DATOS GRAMATICAL (Ahora 20 Temas)
 # ==========================================
 temas_avanzados = {
     "1. Zero Conditional": {
@@ -64,7 +64,7 @@ temas_avanzados = {
     "4. Third Conditional": {
         "uso": "Arrepentimientos o situaciones hipotéticas en el pasado (que ya no se pueden cambiar).",
         "formula": "If + Past Perfect, Would have + Participio Pasado",
-        "ejemplo": "If they had invested earlier, they would have made a profit. (Si hubieran invertido antes, habrían tenido ganancias.)"
+        "ejemplo": "If they had invested earlier, they would have made a profit."
     },
     "5. Mixed Conditional (Past Condition / Present Result)": {
         "uso": "Una acción irreal en el pasado que tiene una consecuencia en el presente.",
@@ -82,9 +82,9 @@ temas_avanzados = {
         "ejemplo": "Rely (Confiar) -> Reliable (Confiable) | Hazard (Peligro) -> Hazardous (Peligroso)."
     },
     "8. Substantivization (Nominalización)": {
-        "uso": "Convertir adjetivos o verbos en sustantivos para sonar más académico o formal (Ej. 'The + Adjetivo' para grupos de personas).",
+        "uso": "Convertir adjetivos o verbos en sustantivos para sonar más académico o formal.",
         "formula": "The + Adjetivo = Grupo social / Verbo + -tion/-ment = Sustantivo abstracto",
-        "ejemplo": "The wealthy (Los ricos) should pay more taxes. / His refusal (de refuse) was unexpected."
+        "ejemplo": "The wealthy (Los ricos) should pay more taxes. / His refusal was unexpected."
     },
     "9. Inversion (Énfasis Formal)": {
         "uso": "Dar un tono dramático o literario alterando el orden de Sujeto y Auxiliar tras adverbios negativos.",
@@ -99,12 +99,12 @@ temas_avanzados = {
     "11. Cleft Sentences (Oraciones Hendidas)": {
         "uso": "Enfatizar una parte específica de la oración (quién lo hizo, cuándo, dónde).",
         "formula": "It is/was + [Parte a enfatizar] + who/that + resto de la oración.",
-        "ejemplo": "It was the marketing department that caused the delay. (Fue el departamento de marketing el que...)"
+        "ejemplo": "It was the marketing department that caused the delay."
     },
     "12. Relative Clauses (Defining & Non-Defining)": {
         "uso": "Añadir información sobre un sustantivo. Las 'Non-defining' van entre comas y se pueden omitir.",
         "formula": "Sustantivo + who/which/that/whose + Cláusula",
-        "ejemplo": "My professor, who is from London, speaks very fast. (Non-defining: se puede omitir y tiene sentido)."
+        "ejemplo": "My professor, who is from London, speaks very fast."
     },
     "13. Participle Clauses": {
         "uso": "Acortar oraciones y sonar más sofisticado uniendo dos acciones realizadas por el mismo sujeto.",
@@ -114,17 +114,42 @@ temas_avanzados = {
     "14. Causative Verbs (Have / Get something done)": {
         "uso": "Indicar que le pagaste o pediste a alguien más que hiciera un servicio por ti.",
         "formula": "Sujeto + Have/Get + Objeto + Participio Pasado",
-        "ejemplo": "I had my car repaired. (Hice que me repararan el auto. Yo no lo reparé personalmente)."
+        "ejemplo": "I had my car repaired. (Hice que me repararan el auto)."
     },
     "15. Subjunctive in English": {
         "uso": "Expresar urgencia, demanda o sugerencia. Se usa el verbo base sin 's' incluso para He/She/It.",
         "formula": "Verbo de demanda (suggest/insist) + that + Sujeto + Verbo base",
         "ejemplo": "The board insisted that he resign immediately. (No 'resigns')."
+    },
+    "16. The Double Comparative": {
+        "uso": "Expresar causa y efecto proporcionales ('Entre más..., más...').",
+        "formula": "The + Comparativo + Sujeto + Verbo, The + Comparativo + Sujeto + Verbo",
+        "ejemplo": "The more you study, the better you will perform. (Entre más estudies, mejor te irá)."
+    },
+    "17. Fronting (Énfasis por posición)": {
+        "uso": "Mover al inicio de la oración elementos que usualmente van al final para dar dramatismo o énfasis.",
+        "formula": "Adverbio/Frase Preposicional + Verbo + Sujeto (A veces sin invertir el verbo)",
+        "ejemplo": "On the table lay a mysterious letter. (Sobre la mesa yacía una carta misteriosa)."
+    },
+    "18. Modals of Deduction (Past)": {
+        "uso": "Hacer deducciones o suposiciones lógicas sobre eventos que ya ocurrieron.",
+        "formula": "Modal (must/might/can't) + have + Participio Pasado",
+        "ejemplo": "He must have forgotten the meeting. (Debe haber olvidado la reunión - 90% seguro)."
+    },
+    "19. Wish / If Only (Advanced Regrets)": {
+        "uso": "Expresar deseos sobre el presente (con pasado simple) o arrepentimientos del pasado (con pasado perfecto).",
+        "formula": "Wish / If only + Past Simple (Presente) OR Past Perfect (Pasado)",
+        "ejemplo": "I wish I had accepted the job offer. (Ojalá hubiera aceptado la oferta)."
+    },
+    "20. Ellipsis (Omisión por fluidez)": {
+        "uso": "Omitir palabras que son obvias por el contexto para evitar repeticiones innecesarias (C1/C2 skill).",
+        "formula": "Omisión de Sujeto/Auxiliar/Verbo si el contexto lo permite.",
+        "ejemplo": "He wanted to leave, but he couldn't [leave]. (Quería irse, pero no pudo)."
     }
 }
 
 # ==========================================
-# 3. BANCO DE PREGUNTAS (Para el Quiz Aleatorio)
+# 3. BANCO DE PREGUNTAS (Ahora 20 Preguntas)
 # ==========================================
 banco_preguntas = [
     {"q": "___ had we started the meeting when the fire alarm went off.", "opts": ["Hardly", "No sooner", "Barely", "As soon as"], "ans": "Hardly", "exp": "Inversión: 'Hardly' se usa con 'had + sujeto' y se complementa con 'when'."},
@@ -136,13 +161,22 @@ banco_preguntas = [
     {"q": "Cleft Sentence: ___ was John who broke the printer.", "opts": ["It", "He", "There", "That"], "ans": "It", "exp": "Estructura de énfasis: It + is/was + sujeto + who/that."},
     {"q": "Participle Clause: ___ all the money, we had to walk home.", "opts": ["Having spent", "Spent", "To spend", "Spending"], "ans": "Having spent", "exp": "Cláusula de participio para mostrar una acción que ocurrió antes que la principal."},
     {"q": "Third Conditional: If I ___ the train, I would have missed the flight.", "opts": ["hadn't caught", "didn't catch", "don't catch", "wouldn't catch"], "ans": "hadn't caught", "exp": "Estructura irreal en el pasado: If + Past Perfect."},
-    {"q": "Adjectivization: Her behavior was completely ___; she wouldn't listen to reason.", "opts": ["irrational", "irrationalize", "irrationality", "irrationable"], "ans": "irrational", "exp": "Adjetivo formado a partir de la raíz 'ration' con prefijo 'ir-' y sufijo '-al'."}
+    {"q": "Adjectivization: Her behavior was completely ___; she wouldn't listen to reason.", "opts": ["irrational", "irrationalize", "irrationality", "irrationable"], "ans": "irrational", "exp": "Adjetivo formado a partir de la raíz 'ration' con prefijo 'ir-' y sufijo '-al'."},
+    {"q": "Vocabulary: Smartphones have become ___ in modern society; almost everyone has one.", "opts": ["ubiquitous", "ephemeral", "obsolete", "elusive"], "ans": "ubiquitous", "exp": "Ubiquitous significa 'omnipresente' o que se encuentra en todas partes."},
+    {"q": "Connector: The project was a massive success, ___ it cost slightly more than anticipated.", "opts": ["albeit", "insofar as", "conversely", "hence"], "ans": "albeit", "exp": "Albeit significa 'aunque', y se usa para contrastar un adjetivo o frase corta."},
+    {"q": "Phrasal Verb: The CEO refused to ___ the possibility of a merger this year.", "opts": ["rule out", "fall through", "bring about", "set out"], "ans": "rule out", "exp": "'Rule out' significa 'descartar' una posibilidad."},
+    {"q": "Double Comparative: The ___ you prepare for the presentation, the ___ anxious you will feel.", "opts": ["more / less", "much / little", "most / least", "more / least"], "ans": "more / less", "exp": "The + comparativo, the + comparativo. 'The more..., the less...'"},
+    {"q": "Modals of Deduction: The streets are wet. It ___ rained last night.", "opts": ["must have", "should have", "can't have", "might"], "ans": "must have", "exp": "Deducción lógica y segura sobre el pasado: Must + have + Participio."},
+    {"q": "Vocabulary: The new policies were implemented to ___ the negative effects of the economic crisis.", "opts": ["mitigate", "exacerbate", "foster", "scrutinize"], "ans": "mitigate", "exp": "Mitigate significa atenuar o reducir la gravedad de algo malo."},
+    {"q": "Idioms: Announcing the victory before the final votes were counted was definitely ___.", "opts": ["jumping the gun", "cutting corners", "biting the bullet", "sitting on the fence"], "ans": "jumping the gun", "exp": "'To jump the gun' significa adelantarse o precipitarse a hacer algo."},
+    {"q": "Wish/If Only: I am exhausted. If only I ___ to bed earlier last night.", "opts": ["had gone", "went", "would go", "have gone"], "ans": "had gone", "exp": "Arrepentimiento sobre el pasado: If only + Pasado Perfecto."},
+    {"q": "Fronting (Emphasis): Out of the dark building ___.", "opts": ["ran a strange man", "a strange man ran", "did a strange man run", "runs a strange man"], "ans": "ran a strange man", "exp": "Fronting de lugar: Frase preposicional + Verbo (ran) + Sujeto (a strange man)."},
+    {"q": "Vocabulary: The shift to remote work represents a fundamental shift in the corporate ___.", "opts": ["paradigm", "dichotomy", "anomaly", "catalyst"], "ans": "paradigm", "exp": "Paradigm (paradigma) se refiere a un modelo o patrón establecido."}
 ]
 
 # ==========================================
 # 4. APLICACIÓN PRINCIPAL
 # ==========================================
-# Encabezado visual
 st.markdown("""
 <div class='header-box'>
     <h1>🏛️ Advanced English C1/C2</h1>
@@ -150,12 +184,10 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# Menú lateral elegante
 st.sidebar.image("https://cdn-icons-png.flaticon.com/512/1903/1903162.png", width=80)
 st.sidebar.title("Navegación C1/C2")
-menu = st.sidebar.radio("Selecciona un módulo:", ["📚 Vocabulary Database", "🧩 Advanced Grammar (15 Topics)", "📝 Randomized Quiz"])
+menu = st.sidebar.radio("Selecciona un módulo:", ["📚 Vocabulary Database", "🧩 Advanced Grammar (20 Topics)", "📝 Randomized Quiz"])
 
-# Cargar CSV de vocabulario (Reutilizamos la función)
 @st.cache_data
 def cargar_vocabulario():
     if os.path.exists('vocabulario_avanzado.csv'):
@@ -181,13 +213,13 @@ if menu == "📚 Vocabulary Database":
         st.error("⚠️ Sube tu archivo 'vocabulario_avanzado.csv' a GitHub para ver la lista.")
 
 # --- MÓDULO 2: GRAMÁTICA AVANZADA ---
-elif menu == "🧩 Advanced Grammar (15 Topics)":
+elif menu == "🧩 Advanced Grammar (20 Topics)":
     colA, colB = st.columns([1, 2])
     with colA:
         st.image("https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80", use_container_width=True)
     with colB:
         st.markdown("### Mastery of Complex Structures")
-        st.write("Selecciona uno de los 15 temas avanzados de la lista desplegable para analizar su estructura formal.")
+        st.write("Selecciona uno de los 20 temas avanzados de la lista desplegable para analizar su estructura formal.")
         tema_seleccionado = st.selectbox("📌 Seleccionar Tema Gramatical:", list(temas_avanzados.keys()))
 
     datos = temas_avanzados[tema_seleccionado]
@@ -206,11 +238,9 @@ elif menu == "🧩 Advanced Grammar (15 Topics)":
 # --- MÓDULO 3: QUIZ ALEATORIO ---
 elif menu == "📝 Randomized Quiz":
     st.markdown("### C1/C2 Proficiency Test")
-    st.write("El sistema selecciona 5 preguntas al azar del banco de datos. ¡Pon a prueba tu dominio estructural!")
+    st.write("El sistema selecciona 5 preguntas al azar de nuestro banco de 20 preguntas avanzadas.")
     
-    # Motor de aleatoriedad
     if 'quiz_actual' not in st.session_state:
-        # Extrae 5 preguntas al azar sin repetirse
         st.session_state.quiz_actual = random.sample(banco_preguntas, 5)
         st.session_state.calificado = False
 
@@ -221,7 +251,6 @@ elif menu == "📝 Randomized Quiz":
 
     respuestas_usuario = {}
     
-    # Mostrar el test generado
     for i, ej in enumerate(st.session_state.quiz_actual):
         st.markdown(f"**{i+1}. {ej['q']}**")
         respuestas_usuario[i] = st.radio("Opciones:", ej['opts'], key=f"rad_{i}", index=None, label_visibility="collapsed")
